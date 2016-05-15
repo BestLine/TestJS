@@ -21,16 +21,16 @@ gulp.task('scripts', function() { // таск конкатирования ск�
 	.pipe(gulp.dest('app/js')); // выгружаем
 });
 
-gulp.task('browser-sync', function() {
+gulp.task('browser-sync', function() { // скрипт обновляющий браузер
 	browserSync({
 		server:{
-			baseDir: 'app'
+			baseDir: 'app'// главная дирректория разработки
 		},
 		//notify: false // опция отвечающая за вывод уведомлений
 	});
 });
 
-gulp.task('watch',['browser-sync', 'sass'], function() {
+gulp.task('watch',['browser-sync', 'sass'], function() { // наблюдатель
 	gulp.watch('app/sass/**/*.sass', ['sass']);
 	gulp.watch('app/*.html', browserSync.reload);
 	gulp.watch('app/js/**/*.js', browserSync.reload);
