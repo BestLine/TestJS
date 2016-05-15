@@ -2,7 +2,8 @@ var gulp        = require('gulp'),// сюда прописываются тре�
 	sass        = require('gulp-sass'),
 	browserSync = require('browser-sync'),
 	concat		= require('gulp-concat'),
-	uglify		= require('gulp-uglifyjs');
+	uglify		= require('gulp-uglifyjs'),
+	jade 		= require('jade');
 
 gulp.task('sass', function() { // создание задачи для гульпа
 	return gulp.src('app/sass/**/*.sass')  // файлы которые берёт гульп
@@ -10,6 +11,13 @@ gulp.task('sass', function() { // создание задачи для гуль�
 	.pipe(gulp.dest('app/css')) // папка куда выгружаются файлы
 	.pipe(browserSync.reload({stream: true})) // дополнительная комманда для перезагрузки браузера
 });
+
+gulp.task('jade', function() {
+	return gulp.src('app/jade/**/*.jade')
+	.pipe(jade())
+	.pipe(gulp.dest('app/js'))
+	.pipe(browserSync.reload({stream: true}))
+})
 
 //gulp.task('scripts', function() { // таск конкатирования скриптов
 //	return gulp.src([ // берём файлы
@@ -30,7 +38,7 @@ gulp.task('browser-sync', function() { // скрипт обновляющий б
 	});
 });
 
-gulp.task('watch',['browser-sync', 'sass'], function() { // наблюдатель
+gulp.task('watch',['browser-sync', 'sass', 'jade'], function() { // наблюдатель
 	gulp.watch('app/sass/**/*.sass', ['sass']);
 	gulp.watch('app/*.html', browserSync.reload);
 	gulp.watch('app/js/**/*.js', browserSync.reload);
