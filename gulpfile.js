@@ -1,12 +1,24 @@
 var gulp        = require('gulp'),// сюда прописываются требуемые либы
 	sass        = require('gulp-sass'),
-	browserSync = require('browser-sync');
+	browserSync = require('browser-sync'),
+	concat		= reauire('gulp-concat'),
+	uglify		= require('gulp-uglifyjs');
 
 gulp.task('sass', function() { // создание задачи для гульпа
 	return gulp.src('app/sass/**/*.sass')  // файлы которые берёт гульп
 	.pipe(sass()) // действие производимое над файлами
 	.pipe(gulp.dest('app/css')) // папка куда выгружаются файлы
 	.pipe(browserSync.reload({stream: true})) // дополнительная комманда для перезагрузки браузера
+});
+
+gulp.task('scripts', function() { // таск конкатирования скриптов
+	return gulp.src([ // берём файлы
+		'app/libs/jquery/jquery.min.js'
+		'app/libs/magnific'
+	]);
+	.pipe(concat('libs.min.js')); // конкатируем (соединяем в один)
+	.pipe(uglify()); // минифицируем (сжимаем)
+	.pipe(gulp.dest('app/js')); // выгружаем
 });
 
 gulp.task('browser-sync', function() {
